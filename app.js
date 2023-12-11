@@ -959,7 +959,7 @@ async function saveCandleDataToPostgreSQL(symbol, timeFrame, newCandle) {
             ]
         );
 
-        // console.log(`data saved to ${timeFrame} for ${symbol}`)
+        console.log(`data saved to ${timeFrame} for ${symbol}`)
     } catch (error) {
         console.error('Error saving candle data to PostgreSQL:', error);
     }
