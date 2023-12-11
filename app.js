@@ -809,7 +809,7 @@ const checkConfigTime = async (candleTimeStamp, symbolConfig, timeFrame, oneMinu
     const myCandleHour = myCandleTime.getUTCHours();
     const myCandleMinute = myCandleTime.getUTCMinutes();
     const dayOfCandle = myCandleTime.getUTCDate();
-    console.log(myCandleTime);
+    // console.log(myCandleTime);
 
 
     if (timeFrame == "5m" || timeFrame == "15m" || timeFrame == "30m") {
