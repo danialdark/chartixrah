@@ -433,6 +433,9 @@ const symbols = {
     "IRO3ASKZ0001": "BRS00580",
     "IRO3BHPZ0001": "BRS00584",
     "IRO3SARZ0001": "BRS00585",
+
+
+    //////////////
     // "IRO3PKHZ0001": "BRS00587",
     // "IRO3ASAZ0001": "BRS00588",
     // "IRO3RPEZ0001": "BRS00591",
@@ -590,7 +593,7 @@ const symbolConfigs = {
         "5m": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
         "15m": [0, 15, 30, 45, 60],
         "30m": [0, 30, 60],
-        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 0],
+        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         "4h": [1, 5, 9, 13, 17, 21],
         "1d": [0, 24],
         "1w": [0, 24],
@@ -600,7 +603,7 @@ const symbolConfigs = {
         "5m": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
         "15m": [0, 15, 30, 45, 60],
         "30m": [0, 30, 60],
-        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 0],
+        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         "4h": [1, 5, 9, 13, 17, 21],
         "1d": [0, 24],
         "1w": [0, 24],
@@ -610,7 +613,7 @@ const symbolConfigs = {
         "5m": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
         "15m": [0, 15, 30, 45, 60],
         "30m": [0, 30, 60],
-        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 0],
+        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         "4h": [1, 5, 9, 13, 17, 21],
         "1d": [0, 24],
         "1w": [0, 24],
@@ -620,7 +623,7 @@ const symbolConfigs = {
         "5m": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
         "15m": [0, 15, 30, 45, 60],
         "30m": [0, 30, 60],
-        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 0],
+        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         "4h": [1, 5, 9, 13, 17, 21],
         "1d": [0, 24],
         "1w": [0, 24],
@@ -630,7 +633,7 @@ const symbolConfigs = {
         "5m": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
         "15m": [0, 15, 30, 45, 60],
         "30m": [0, 30, 60],
-        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 0],
+        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         "4h": [1, 5, 9, 13, 17, 21],
         "1d": [0, 24],
         "1w": [0, 24],
@@ -640,7 +643,7 @@ const symbolConfigs = {
         "5m": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
         "15m": [0, 15, 30, 45, 60],
         "30m": [0, 30, 60],
-        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 0],
+        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         "4h": [1, 5, 9, 13, 17, 21],
         "1d": [0, 24],
         "1w": [0, 24],
@@ -650,7 +653,7 @@ const symbolConfigs = {
         "5m": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
         "15m": [0, 15, 30, 45, 60],
         "30m": [0, 30, 60],
-        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 0],
+        "1h": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         "4h": [1, 5, 9, 13, 17, 21],
         "1d": [0, 24],
         "1w": [0, 24],
@@ -796,16 +799,18 @@ function getFirstDayOfMonthNotFridayOrThursday() {
 }
 
 const checkConfigTime = async (candleTimeStamp, symbolConfig, timeFrame, oneMinuteTime) => {
-    const oneMinuteCandleTime = new Date(oneMinuteTime * 1000);
+    const oneMinuteCandleTime = new Date((oneMinuteTime + 12600) * 1000);
     const dayOfWeek = oneMinuteCandleTime.getUTCDay(); //0 is sunday
     const dayOfMonth = oneMinuteCandleTime.getUTCDate();  //0 is sunday
     const candleHour = oneMinuteCandleTime.getUTCHours();
     const candleMinute = oneMinuteCandleTime.getUTCMinutes();
-
-    const myCandleTime = new Date(candleTimeStamp * 1000);
+    // console.log(oneMinuteCandleTime);
+    const myCandleTime = new Date((candleTimeStamp+ 12600) * 1000);
     const myCandleHour = myCandleTime.getUTCHours();
     const myCandleMinute = myCandleTime.getUTCMinutes();
     const dayOfCandle = myCandleTime.getUTCDate();
+    console.log(myCandleTime);
+
 
     if (timeFrame == "5m" || timeFrame == "15m" || timeFrame == "30m") {
         const filteredArray = symbolConfig[dayOfWeek][timeFrame].filter(num => num > candleMinute);
@@ -967,6 +972,7 @@ async function saveCandleDataToPostgreSQL(symbol, timeFrame, newCandle) {
 
 
 const shouldMakeAllTimeFrames = ['1m', '5m', '15m', '30m', '1h', '4h', '1d', '1w', '1M'];
+// const shouldMakeAllTimeFrames = ['1m', '5m'];
 
 
 const makeOtherCandles = async (allCandles, smallestTimeFrame, lastVolume, username, name) => {
