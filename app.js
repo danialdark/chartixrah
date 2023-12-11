@@ -1281,7 +1281,7 @@ async function connectToWebSocket(username, name) {
 
 
                 await makeOtherCandles(allCandles, "1m", lastVolume, username, name)
-                console.log(allCandles)
+                // console.log(allCandles)
                 redis.pipeline().set(`${name.toLowerCase()}`, JSON.stringify(allCandles)).expire(`${name.toLowerCase()}`, 259200).exec();
             }
         });
