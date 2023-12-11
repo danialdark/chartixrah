@@ -1304,7 +1304,7 @@ async function connectToWebSocket(username, name) {
 
 async function startStreams() {
     const chunkSize = 100;
-    const symbolsPerDelay = 500;
+    const symbolsPerDelay = 400;
     const delayDuration = 60 * 1000; // 1 minute in milliseconds
     const symbolChunks = [];
 
