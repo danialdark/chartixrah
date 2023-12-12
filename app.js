@@ -1,5 +1,5 @@
 const symbols = {
-    "IRT1AHRM0001": "BRS001195",
+    "IRO1IKCO0001": "BRS0097",
     "IRO1PAKS0001": "BRS001",
     "IRO1PKER0001": "BRS002",
     "IRO1ABAD0001": "BRS003",
@@ -94,7 +94,6 @@ const symbols = {
     "IRO1HTOK0001": "BRS0094",
     "IRO1IDOC0001": "BRS0095",
     "IRO7IAGM0001": "BRS0096",
-    "IRO1IKCO0001": "BRS0097",
     "IRO1IKHR0001": "BRS0098",
     "IRO1INDM0001": "BRS0099",
     "IRO1INFO0001": "BRS00100",
@@ -804,12 +803,10 @@ const checkConfigTime = async (candleTimeStamp, symbolConfig, timeFrame, oneMinu
     const dayOfMonth = oneMinuteCandleTime.getUTCDate();  //0 is sunday
     const candleHour = oneMinuteCandleTime.getUTCHours();
     const candleMinute = oneMinuteCandleTime.getUTCMinutes();
-    // console.log(oneMinuteCandleTime);
-    const myCandleTime = new Date((candleTimeStamp+ 12600) * 1000);
+    const myCandleTime = new Date((candleTimeStamp + 12600) * 1000);
     const myCandleHour = myCandleTime.getUTCHours();
     const myCandleMinute = myCandleTime.getUTCMinutes();
     const dayOfCandle = myCandleTime.getUTCDate();
-    // console.log(myCandleTime);
 
 
     if (timeFrame == "5m" || timeFrame == "15m" || timeFrame == "30m") {
@@ -975,7 +972,7 @@ const shouldMakeAllTimeFrames = ['1m', '5m', '15m', '30m', '1h', '4h', '1d', '1w
 // const shouldMakeAllTimeFrames = ['1m', '5m'];
 
 
-const makeOtherCandles = async (allCandles, smallestTimeFrame, lastVolume, username, name) => {
+const makeOtherCandles = async (allCandles, smallestTimeFrame, lastVolume, username, name, lastTimeStamp) => {
 
     // now we will make other candles from 1 minute last candle
     const indexToKeep = shouldMakeAllTimeFrames.indexOf(smallestTimeFrame);
@@ -986,6 +983,8 @@ const makeOtherCandles = async (allCandles, smallestTimeFrame, lastVolume, usern
     } else {
         console.log(`The element ${smallestTimeFrame} was not found in the array.`);
     }
+
+
 
 
     const lastOneMinuteCandle = allCandles[smallestTimeFrame][0];
@@ -1056,14 +1055,17 @@ const makeOtherCandles = async (allCandles, smallestTimeFrame, lastVolume, usern
             // this is for v
             if (shouldContinueCandle) {
 
-                if (lastOneMinuteCandle.v - lastVolume > 0) {
-                    shouldBe = allCandles[timeframe][0].v + (lastOneMinuteCandle.v - lastVolume)
-                } else {
-                    if (lastVolume != lastOneMinuteCandle.v) {
-                        shouldBe = allCandles[timeframe][0].v + lastOneMinuteCandle.v
+
+                if ((lastOneMinuteCandle.t == lastTimeStamp)) {
+
+                    if (lastOneMinuteCandle.v - lastVolume > 0) {
+                        shouldBe = allCandles[timeframe][0].v + (lastOneMinuteCandle.v - lastVolume)
                     } else {
                         shouldBe = allCandles[timeframe][0].v
                     }
+
+                } else {
+                    shouldBe = allCandles[timeframe][0].v + lastOneMinuteCandle.v
                 }
 
                 openPrice = allCandles[timeframe][0].o;
@@ -1240,6 +1242,7 @@ async function connectToWebSocket(username, name) {
             let candleData = await filterData(result, ws)
             if (candleData != undefined) {
                 var lastVolume = 0;
+                var lastTimeStamp = 0;
                 const newCandle = {
                     t: candleData.t,
                     T: 0,
@@ -1252,6 +1255,7 @@ async function connectToWebSocket(username, name) {
 
                 if (allCandles['1m'][0] != undefined) {
                     lastVolume = allCandles['1m'][0].v;
+                    lastTimeStamp = allCandles['1m'][0].t;
                 }
 
 
@@ -1286,7 +1290,7 @@ async function connectToWebSocket(username, name) {
                 }
 
 
-                await makeOtherCandles(allCandles, "1m", lastVolume, username, name)
+                await makeOtherCandles(allCandles, "1m", lastVolume, username, name, lastTimeStamp)
                 // console.log(allCandles)
                 redis.pipeline().set(`${name.toLowerCase()}`, JSON.stringify(allCandles)).expire(`${name.toLowerCase()}`, 259200).exec();
             }
