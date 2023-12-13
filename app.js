@@ -558,7 +558,7 @@ const Redis = require('ioredis');
 const port = 3000;
 
 const redis = new Redis({
-    host: '91.107.160.210',
+    host: 'localhost',
     port: '6379',
     password: 'D@n!@l12098',
     enableCompression: true,
