@@ -2,16 +2,27 @@ const db = require('./db'); // Adjust the path as needed
 const axios = require('axios');
 
 
-async function getData() {
+const getData = async () => {
     const response = await axios.get(`http://87.107.190.134/brsModern/out/rsSymOutActive.php`);
+    var serverNumber = 1;
+    var serverCounter = 1;
+
+
     for (const data of response.data) {
-        insertOrUpdateSymbolToDatabase(data.ticker.toUpperCase(), data)
+
+        if (serverCounter % 400 == 0) {
+            serverNumber++;
+        }
+
+        insertOrUpdateSymbolToDatabase(data.ticker.toUpperCase(), data, serverNumber)
+        serverCounter++
+
     }
 }
 
 
 
-async function insertOrUpdateSymbolToDatabase(symbol, symbolData) {
+async function insertOrUpdateSymbolToDatabase(symbol, symbolData, serverNumber) {
     const {
         title,
         alias,
@@ -23,8 +34,8 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData) {
 
     try {
         await db.none(
-            `INSERT INTO stock_symbols (name, username,title,alias,status, description , exchange, binance_status,quote_precision)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9)
+            `INSERT INTO stock_symbols (name, username,title,alias,status, description , exchange, binance_status,quote_precision,server)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9,$10)
             ON CONFLICT (name) DO UPDATE
             SET
               name = excluded.name,
@@ -32,6 +43,7 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData) {
               alias = excluded.alias,
               title = excluded.title,
               description = excluded.description,
+              server = excluded.server,
               exchange = excluded.exchange;`,
             [
                 ticker != null ? ticker : "ندارد",
@@ -43,14 +55,16 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData) {
                 exchange != null ? exchange : "ندارد",
                 1,
                 1,
+                serverNumber
             ]
         );
-        console.log(`Inserted/Updated symbol: ${symbol}`);
+        console.log(`Inserted/Updated symbol: ${symbol} on server:${serverNumber}`);
     } catch (error) {
         console.error(`Error saving symbol ${symbol} to PostgreSQL:`, error);
     }
 }
 
+module.exports = getData;
 
-getData()
+// ()
 
