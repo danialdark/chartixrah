@@ -1,4 +1,4 @@
-const symbols = {}
+var symbols = {}
 
 const getData = require('./symbol')
 const db = require('./db'); // Adjust the path as needed
@@ -380,7 +380,7 @@ async function saveCandleDataToPostgreSQL(symbol, timeFrame, newCandle) {
     const fetchedSymbolId = await getSymbolIdByName(symbol.toUpperCase());
     const timestampMilliseconds = newCandle.t * 1000; // Unix timestamp in milliseconds
     const modifiedFormattedDateTime = moment(timestampMilliseconds).utc().format('YYYY-MM-DD HH:mm:ss');
-    console.log(`going to save for ${timeFrame}`)
+    // console.log(`going to save for ${timeFrame}`)
     try {
         await db.none(
             `INSERT INTO ${tableMap[timeFrame]} (symbol_id, symbol_name, open_time, open_price, high_price, low_price, close_price, volumn, close_time, created_at) 
@@ -407,7 +407,7 @@ async function saveCandleDataToPostgreSQL(symbol, timeFrame, newCandle) {
             ]
         );
 
-        console.log(`data saved to ${timeFrame} for ${symbol}`)
+        // console.log(`data saved to ${timeFrame} for ${symbol}`)
     } catch (error) {
         console.error('Error saving candle data to PostgreSQL:', error);
     }
@@ -804,7 +804,6 @@ async function updateSymbols(symbols, serverNumber) {
     try {
         const query = 'SELECT * FROM stock_symbols WHERE server = $1';
         const response = await db.any(query, serverNumber);
-
         // Initialize an empty object to store key-value pairs
 
         for (const symbol of response) {
@@ -874,10 +873,22 @@ const timeoutId = setTimeout(() => {
 }, 30000);
 
 (async () => {
-    await getData()
-    await updateSymbols(symbols, 2);
-    console.log("symbols updated successfully")
-    await startStreams();
+    // await getData(); // Assuming this function retrieves some data
+    for (let index = 1; index < 11; index++) {
+
+        // Use a symbols object to accumulate data across iterations
+        symbols = {}
+
+        await updateSymbols(symbols, index);
+        await startStreams();
+
+        console.log(`********************************live started for ${index} server************************************`);
+
+        // Introduce a 20-second delay before the next iteration
+        if (index < 10) {
+            await new Promise(resolve => setTimeout(resolve, 20000));
+        }
+    }
 })();
 
 
