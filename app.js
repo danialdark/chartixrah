@@ -778,7 +778,6 @@ async function connectToWebSocket(username, name) {
 
 
                 await makeOtherCandles(allCandles, "1m", lastVolume, username, name, lastTimeStamp)
-                // console.log(allCandles)
                 redis.pipeline().set(`${name.toLowerCase()}`, JSON.stringify(allCandles)).expire(`${name.toLowerCase()}`, 259200).exec();
             }
         });
@@ -849,30 +848,10 @@ async function startStreams() {
     }
 }
 
-// function restartSystem(timeoutId) {
-//     clearTimeout(timeoutId);
 
-//     setTimeout(() => {
-//         process.exit(1);
-//     }, 60000);
-// }
-
-
-// const timeoutId = setTimeout(() => {
-//     const currentTime = jalalimoment();
-//     const Hour = jalalimoment(currentTime).startOf('jHour');
-//     const Minute = jalalimoment(currentTime).startOf('jMinute');
-
-//     const currentHour = Hour.format('HH'); // Get Jalali hour
-//     const currentMinute = Minute.format('mm'); // Get Jalali minute
-//     if (currentHour == 8 && currentMinute == 33) {
-//         console.log("restarting system")
-//         restartSystem(timeoutId)
-//     }
-// }, 30000);
 
 (async () => {
-    // await getData(); // Assuming this function retrieves some data
+    await getData(); // Assuming this function retrieves some data
     for (let index = 1; index < 11; index++) {
 
         // Use a symbols object to accumulate data across iterations
@@ -885,7 +864,7 @@ async function startStreams() {
 
         // Introduce a 110-second delay before the next iteration
         if (index < 11) {
-            await new Promise(resolve => setTimeout(resolve, 90000));
+            await new Promise(resolve => setTimeout(resolve, 60000));
         }
     }
 

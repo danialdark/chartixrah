@@ -10,7 +10,7 @@ const getData = async () => {
 
     for (const data of response.data) {
 
-        if (serverCounter % 400 == 0) {
+        if (serverCounter % 300 == 0) {
             serverNumber++;
         }
 
