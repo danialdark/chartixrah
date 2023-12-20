@@ -498,12 +498,10 @@ const makeOtherCandles = async (allCandles, smallestTimeFrame, lastVolume, usern
 
             // this is for v
             if (shouldContinueCandle) {
-                if (+lastOneMinuteCandle.t == +lastTimeStamp) {
-                    shouldBe = +lastOneMinuteCandle.v >= +lastVolume
-                        ? allCandles[timeframe][0].v + lastOneMinuteCandle.v - lastVolume
-                        : allCandles[timeframe][0].v + lastOneMinuteCandle.v;
+                if ((lastOneMinuteCandle.t == lastTimeStamp)) {
+                    shouldBe = allCandles[timeframe][0].v + lastOneMinuteCandle.v - lastVolume
                 } else {
-                    shouldBe = allCandles[timeframe][0].v + lastOneMinuteCandle.v;
+                    shouldBe = allCandles[timeframe][0].v + lastOneMinuteCandle.v
                 }
 
                 openPrice = allCandles[timeframe][0].o;
