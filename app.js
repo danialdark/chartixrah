@@ -874,7 +874,7 @@ async function startStreams() {
 // }, 30000);
 
 (async () => {
-    // await getData(); // Assuming this function retrieves some data
+    await getData(); // Assuming this function retrieves some data
     for (let index = 1; index < 11; index++) {
 
         // Use a symbols object to accumulate data across iterations
@@ -887,7 +887,7 @@ async function startStreams() {
 
         // Introduce a 20-second delay before the next iteration
         if (index < 11) {
-            await new Promise(resolve => setTimeout(resolve, 60000));
+            await new Promise(resolve => setTimeout(resolve, 10000));
         }
     }
 
