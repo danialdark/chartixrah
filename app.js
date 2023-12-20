@@ -498,10 +498,12 @@ const makeOtherCandles = async (allCandles, smallestTimeFrame, lastVolume, usern
 
             // this is for v
             if (shouldContinueCandle) {
-                if ((lastOneMinuteCandle.t == lastTimeStamp)) {
-                    shouldBe = allCandles[timeframe][0].v + lastOneMinuteCandle.v - lastVolume
+                if (+lastOneMinuteCandle.t == +lastTimeStamp) {
+                    shouldBe = +lastOneMinuteCandle.v >= +lastVolume
+                        ? allCandles[timeframe][0].v + lastOneMinuteCandle.v - lastVolume
+                        : allCandles[timeframe][0].v + lastOneMinuteCandle.v;
                 } else {
-                    shouldBe = allCandles[timeframe][0].v + lastOneMinuteCandle.v
+                    shouldBe = allCandles[timeframe][0].v + lastOneMinuteCandle.v;
                 }
 
                 openPrice = allCandles[timeframe][0].o;
@@ -780,7 +782,7 @@ async function connectToWebSocket(username, name) {
 
 
                 await makeOtherCandles(allCandles, "1m", lastVolume, username, name, lastTimeStamp)
-                // console.log(allCandles)
+                console.log(allCandles)
                 redis.pipeline().set(`${name.toLowerCase()}`, JSON.stringify(allCandles)).expire(`${name.toLowerCase()}`, 259200).exec();
             }
         });
