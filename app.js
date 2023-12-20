@@ -885,7 +885,7 @@ async function startStreams() {
 
         // Introduce a 110-second delay before the next iteration
         if (index < 11) {
-            await new Promise(resolve => setTimeout(resolve, 60000));
+            await new Promise(resolve => setTimeout(resolve, 90000));
         }
     }
 
