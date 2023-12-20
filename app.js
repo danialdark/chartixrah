@@ -875,7 +875,7 @@ const timeoutId = setTimeout(() => {
 
 (async () => {
     await getData()
-    await updateSymbols(symbols, 1);
+    await updateSymbols(symbols, 2);
     console.log("symbols updated successfully")
     await startStreams();
 })();
