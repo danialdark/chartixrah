@@ -817,7 +817,7 @@ async function updateSymbols(symbols, serverNumber) {
     }
 }
 
-
+let counter = 0;
 async function startStreams() {
     const chunkSize = 100;
     const symbolsPerDelay = 400;
@@ -835,7 +835,8 @@ async function startStreams() {
     for (let i = 0; i < symbolChunks.length; i++) {
         const chunk = symbolChunks[i];
         const promises = chunk.map(async ([username, name]) => {
-
+            counter++
+            console.log(counter)
             // Connect to WebSocket
             await connectToWebSocket(username, name);
         });
@@ -850,27 +851,27 @@ async function startStreams() {
     }
 }
 
-function restartSystem(timeoutId) {
-    clearTimeout(timeoutId);
+// function restartSystem(timeoutId) {
+//     clearTimeout(timeoutId);
 
-    setTimeout(() => {
-        process.exit(1);
-    }, 60000);
-}
+//     setTimeout(() => {
+//         process.exit(1);
+//     }, 60000);
+// }
 
 
-const timeoutId = setTimeout(() => {
-    const currentTime = jalalimoment();
-    const Hour = jalalimoment(currentTime).startOf('jHour');
-    const Minute = jalalimoment(currentTime).startOf('jMinute');
+// const timeoutId = setTimeout(() => {
+//     const currentTime = jalalimoment();
+//     const Hour = jalalimoment(currentTime).startOf('jHour');
+//     const Minute = jalalimoment(currentTime).startOf('jMinute');
 
-    const currentHour = Hour.format('HH'); // Get Jalali hour
-    const currentMinute = Minute.format('mm'); // Get Jalali minute
-    if (currentHour == 8 && currentMinute == 33) {
-        console.log("restarting system")
-        restartSystem(timeoutId)
-    }
-}, 30000);
+//     const currentHour = Hour.format('HH'); // Get Jalali hour
+//     const currentMinute = Minute.format('mm'); // Get Jalali minute
+//     if (currentHour == 8 && currentMinute == 33) {
+//         console.log("restarting system")
+//         restartSystem(timeoutId)
+//     }
+// }, 30000);
 
 (async () => {
     // await getData(); // Assuming this function retrieves some data
@@ -885,10 +886,12 @@ const timeoutId = setTimeout(() => {
         console.log(`********************************live started for ${index} server************************************`);
 
         // Introduce a 20-second delay before the next iteration
-        if (index < 10) {
-            await new Promise(resolve => setTimeout(resolve, 20000));
+        if (index < 11) {
+            await new Promise(resolve => setTimeout(resolve, 60000));
         }
     }
+
+    console.log("all lived");
 })();
 
 
