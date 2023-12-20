@@ -651,6 +651,7 @@ async function filterData(data, ws, username, name) {
         ws.send(Number(data) + 1);
     }
 
+
     if (data.startsWith('41')) {
         await ws.close();
 
@@ -663,10 +664,7 @@ async function filterData(data, ws, username, name) {
 
     }
 
-    if (data.includes('"isClosed":1')) {
-        await ws.close(1000, "market finished");
-        console.log(`${name} is closed`);
-    }
+
 
     if (data.startsWith('42["tttv"')) {
         data = data.substring(10);
@@ -780,7 +778,7 @@ async function connectToWebSocket(username, name) {
 
 
                 await makeOtherCandles(allCandles, "1m", lastVolume, username, name, lastTimeStamp)
-                // console.log(allCandles)
+                console.log(allCandles)
                 redis.pipeline().set(`${name.toLowerCase()}`, JSON.stringify(allCandles)).expire(`${name.toLowerCase()}`, 259200).exec();
             }
         });
@@ -874,8 +872,8 @@ async function startStreams() {
 // }, 30000);
 
 (async () => {
-    await getData(); // Assuming this function retrieves some data
-    for (let index = 1; index < 11; index++) {
+    // await getData(); // Assuming this function retrieves some data
+    for (let index = 1; index < 2; index++) {
 
         // Use a symbols object to accumulate data across iterations
         symbols = {}
@@ -886,7 +884,7 @@ async function startStreams() {
         console.log(`********************************live started for ${index} server************************************`);
 
         // Introduce a 20-second delay before the next iteration
-        if (index < 11) {
+        if (index < 2) {
             await new Promise(resolve => setTimeout(resolve, 10000));
         }
     }
