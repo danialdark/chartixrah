@@ -799,7 +799,7 @@ async function connectToWebSocket(username, name) {
 
 async function updateSymbols(symbols, serverNumber) {
     try {
-        const query = 'SELECT * FROM stock_symbols WHERE server = $1';
+        const query = 'SELECT * FROM stock_symbols WHERE server = $1 and status = 1';
         const response = await db.any(query, serverNumber);
         // Initialize an empty object to store key-value pairs
 
