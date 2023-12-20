@@ -29,10 +29,12 @@ const getData = async () => {
             serverNumber++;
         }
 
-
-        const status = await checkStatus(data.bourse_ticker.toUpperCase())
-        insertOrUpdateSymbolToDatabase(data.ticker.toUpperCase(), data, serverNumber, status)
+        if (data.bourse_ticker != null) {
+            const status = await checkStatus(data.bourse_ticker.toUpperCase())
+            insertOrUpdateSymbolToDatabase(data.ticker.toUpperCase(), data, serverNumber, status)
+        }
         serverCounter++
+
     }
 }
 
