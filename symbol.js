@@ -9,7 +9,7 @@ async function checkStatus(dataTicker) {
     if (response.data.t == null) {
         return 0;
     } else {
-        if (response.data.t.reverse()[0] > currentTimestampInSeconds - 259200) {
+        if (response.data.t.reverse()[0] > currentTimestampInSeconds - 345600) {
             return 1;
         } else {
             return 0;
