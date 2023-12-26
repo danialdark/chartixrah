@@ -20,7 +20,7 @@ async function checkStatus(dataTicker) {
 
 const checkAgain = async () => {
     try {
-        const query = 'SELECT * FROM stock_symbols WHERE status = 0';
+        const query = 'SELECT * FROM stock_symbols WHERE status = 0 order by server';
         const response = await db.any(query);
         // Initialize an empty object to store key-value pairs
         for (const symbol of response) {
@@ -85,7 +85,7 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData, serverNumber, 
 
 
 
-
+// checkAgain()
 module.exports = checkAgain;
 
 // ()
