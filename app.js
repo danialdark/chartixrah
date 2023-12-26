@@ -876,7 +876,7 @@ async function letsCheck(symbols) {
 
 
 (async () => {
-    // await getData(); // Assuming this function retrieves some data
+    await getData(); // Assuming this function retrieves some data
     for (let index = 1; index < 12; index++) {
 
         // Use a symbols object to accumulate data across iterations
