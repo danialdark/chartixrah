@@ -49,10 +49,11 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData, serverNumber, 
         description,
         exchange,
     } = symbolData;
+    if (status == 1) {
 
-    try {
-        await db.none(
-            `INSERT INTO stock_symbols (name, username,title,alias,status, description , exchange, binance_status,quote_precision,server)
+        try {
+            await db.none(
+                `INSERT INTO stock_symbols (name, username,title,alias,status, description , exchange, binance_status,quote_precision,server)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9,$10)
             ON CONFLICT (name) DO UPDATE
             SET
@@ -64,23 +65,25 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData, serverNumber, 
               description = excluded.description,
               server = excluded.server,
               exchange = excluded.exchange;`,
-            [
-                ticker != null ? ticker : "ندارد",
-                bourse_ticker != null ? bourse_ticker : "ندارد",
-                title != null ? title : "ندارد",
-                alias != null ? alias : "ندارد",
-                status,
-                description != null ? description : "ندارد",
-                exchange != null ? exchange : "ندارد",
-                1,
-                1,
-                serverNumber
-            ]
-        );
-        console.log(`Inserted/Updated symbol: ${symbol} on server:${serverNumber} that is ${status == 0 ? 'inactive' : "active"}`);
-    } catch (error) {
-        console.error(`Error saving symbol ${symbol} to PostgreSQL:`, error);
+                [
+                    ticker != null ? ticker : "ندارد",
+                    bourse_ticker != null ? bourse_ticker : "ندارد",
+                    title != null ? title : "ندارد",
+                    alias != null ? alias : "ندارد",
+                    status,
+                    description != null ? description : "ندارد",
+                    exchange != null ? exchange : "ندارد",
+                    1,
+                    1,
+                    serverNumber
+                ]
+            );
+            console.log(`Inserted/Updated symbol: ${symbol} on server:${serverNumber} that is ${status == 0 ? 'inactive' : "active"}`);
+        } catch (error) {
+            console.error(`Error saving symbol ${symbol} to PostgreSQL:`, error);
+        }
     }
+
 }
 
 
