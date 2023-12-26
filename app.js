@@ -894,6 +894,7 @@ async function letsCheck(symbols) {
 
 
     setInterval(async () => {
+        console.log("**************************************************")
         await getData()
         symbols = {}
         await letsCheck(symbols);
