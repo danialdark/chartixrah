@@ -893,15 +893,22 @@ async function letsCheck(symbols) {
     }
 
 
-    setInterval(async () => {
-        console.log("**************************************************")
-        await getData()
-        symbols = {}
+    async function runInterval() {
+        console.log("**************************************************");
+        await getData();
+
+        // Assuming that getData updates symbols
+        let symbols = {};
+
         await letsCheck(symbols);
         await startStreams();
-    }, 5  * 1000);
 
+        // Call the runInterval function again after a delay
+        setTimeout(runInterval, 5 * 1000);
+    }
     console.log("all lived");
+    // Initial call to start the interval
+    runInterval();
 })();
 
 
