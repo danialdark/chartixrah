@@ -1,6 +1,7 @@
 var symbols = {}
 
 const getData = require('./symbol')
+const checkAgain = require('./activatorChecker')
 const db = require('./db'); // Adjust the path as needed
 const Redis = require('ioredis');
 const port = 3000;
@@ -892,10 +893,11 @@ async function letsCheck(symbols) {
         }
     }
 
+    console.log("all lived");
 
     async function runInterval() {
-        console.log("**************************************************");
-        await getData();
+        console.log("checking again");
+        await checkAgain();
 
         // Assuming that getData updates symbols
         let symbols = {};
@@ -906,7 +908,6 @@ async function letsCheck(symbols) {
         // Call the runInterval function again after a delay
         setTimeout(runInterval, 5 * 1000);
     }
-    console.log("all lived");
     // Initial call to start the interval
     runInterval();
 })();
