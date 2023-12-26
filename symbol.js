@@ -6,7 +6,8 @@ async function checkStatus(dataTicker) {
     const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
 
     const response = await axios.get(`https://www.nahayatnegar.com/tv/chart/history?symbol=${dataTicker}0&resolution=1D&from=0&to=${currentTimestampInSeconds}&countback=2`);
-    if (response.data.t == null) {
+    if (response.data.t == null || response.data.s != "ok") {
+
         return 0;
     } else {
         if (response.data.t.reverse()[0] > currentTimestampInSeconds - 345600) {
