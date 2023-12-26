@@ -4,13 +4,14 @@ const getData = require('./symbol')
 const db = require('./db'); // Adjust the path as needed
 const Redis = require('ioredis');
 const port = 3000;
-
 const redis = new Redis({
     host: '91.107.160.210',
     port: '6379',
     password: 'D@n!@l12098',
     enableCompression: true,
 });
+
+var allActiveSymbols = [];
 
 var pipeline = redis.pipeline();
 const jalalimoment = require('jalali-moment');
@@ -695,6 +696,8 @@ async function connectToWebSocket(username, name) {
         ws.on('open', () => {
             console.log(`Connected to WebSocket server for ${username}`);
 
+            allActiveSymbols.push(username);
+
             const subscriptionMessage = '40';
             ws.send(subscriptionMessage);
 
@@ -850,9 +853,30 @@ async function startStreams() {
 
 
 
+async function letsCheck(symbols) {
+    try {
+        const query = 'SELECT * FROM stock_symbols WHERE status = 1';
+        const response = await db.any(query);
+        // Initialize an empty object to store key-value pairs
+
+        for (const symbol of response) {
+            // Assign each 'username' as a key and 'name' as a value in the 'symbols' object
+            if (!allActiveSymbols.includes(symbol.username.replace(/\n/g, ''))) {
+                symbols[symbol.username.replace(/\n/g, '')] = symbol.name.replace(/\n/g, '');
+            }
+        }
+
+    } catch (error) {
+        // Handle the error, log it, or throw it depending on your needs
+        console.error('Error fetching symbols:', error.message);
+    }
+}
+
+
+
 (async () => {
     await getData(); // Assuming this function retrieves some data
-    for (let index = 1; index < 15; index++) {
+    for (let index = 1; index < 2; index++) {
 
         // Use a symbols object to accumulate data across iterations
         symbols = {}
@@ -867,6 +891,14 @@ async function startStreams() {
             await new Promise(resolve => setTimeout(resolve, 60000));
         }
     }
+
+
+    setInterval(async () => {
+        await getData()
+        symbols = {}
+        await letsCheck(symbols);
+        await startStreams();
+    }, 5 * 60 * 1000);
 
     console.log("all lived");
 })();
