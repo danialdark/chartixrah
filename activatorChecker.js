@@ -1,8 +1,8 @@
 const db = require('./db'); // Adjust the path as needed
 const axios = require('axios');
+const getHistory = require("./history")
 
-
-async function checkStatus(dataTicker) {
+async function checkStatus(name, dataTicker) {
     const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
 
     const response = await axios.get(`https://www.nahayatnegar.com/tv/chart/history?symbol=${dataTicker}0&resolution=1D&from=0&to=${currentTimestampInSeconds}&countback=2`);
@@ -10,6 +10,7 @@ async function checkStatus(dataTicker) {
         return 0;
     } else {
         if (response.data.t.reverse()[0] > currentTimestampInSeconds - 345600) {
+            await getHistory(name, dataTicker, ["1M", "1W", "1D", "4h", "1h", "30m", "15m", "5m", "1m"])
             return 1;
         } else {
             return 0;
@@ -24,7 +25,7 @@ const checkAgain = async () => {
         const response = await db.any(query);
         // Initialize an empty object to store key-value pairs
         for (const symbol of response) {
-            const status = await checkStatus(symbol.username.toUpperCase())
+            const status = await checkStatus(symbol.name.toUpperCase(), symbol.username.toUpperCase())
             await insertOrUpdateSymbolToDatabase(symbol.name.toUpperCase(), symbol, symbol.server, status)
 
         }
@@ -88,8 +89,6 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData, serverNumber, 
 
 
 
-// checkAgain()
 module.exports = checkAgain;
 
-// ()
 

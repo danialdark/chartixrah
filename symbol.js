@@ -20,7 +20,7 @@ async function checkStatus(dataTicker) {
 }
 
 const getData = async () => {
-    const response = await axios.get(`http://87.107.190.134/brsModern/out/rsSymOutActive.php`);
+    const response = await axios.get(`http://87.107.190.134/brsModern/out/allParamsOut.php?token=a1ec6994fe01bb01f4c85edc14395`);
     var serverNumber = 1;
     var serverCounter = 1;
 
@@ -40,7 +40,6 @@ const getData = async () => {
 }
 
 
-
 async function insertOrUpdateSymbolToDatabase(symbol, symbolData, serverNumber, status) {
     const {
         title,
@@ -49,12 +48,18 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData, serverNumber, 
         bourse_ticker,
         description,
         exchange,
+        industryGroup,
+        industryGroupCode,
+        industrySubGroup,
+        industrySubGroupCode,
+        rahavardId,
+        brsId
     } = symbolData;
 
     try {
         await db.none(
-            `INSERT INTO stock_symbols (name, username,title,alias,status, description , exchange, binance_status,quote_precision,server)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9,$10)
+            `INSERT INTO stock_symbols (name, username,title,alias,status, description , exchange, binance_status ,quote_precision ,server,rahavard_id,industry_group,industry_id,industry_sub_group,industry_sub_id,bours_id )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9,$10,$11,$12,$13,$14,$15,$16)
             ON CONFLICT (name) DO UPDATE
             SET
               name = excluded.name,
@@ -64,8 +69,14 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData, serverNumber, 
               status = excluded.status,
               description = excluded.description,
               server = excluded.server,
+              rahavard_id = excluded.rahavard_id,
+              industry_group = excluded.industry_group,
+              industry_id = excluded.industry_id,
+              industry_sub_group = excluded.industry_sub_group,
+              industry_sub_id = excluded.industry_sub_id,
+              bours_id = excluded.bours_id,
               exchange = excluded.exchange;`,
-            [
+              [
                 ticker != null ? ticker : "ندارد",
                 bourse_ticker != null ? bourse_ticker : "ندارد",
                 title != null ? title : "ندارد",
@@ -75,7 +86,13 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData, serverNumber, 
                 exchange != null ? exchange : "ندارد",
                 1,
                 1,
-                serverNumber
+                serverNumber,
+                industryGroup != null ? industryGroup : "ندارد",
+                industryGroupCode != null ? industryGroupCode : "ندارد",
+                industrySubGroup != null ? industrySubGroup : "ندارد",
+                industrySubGroupCode != null ? industrySubGroupCode : "ندارد",
+                rahavardId != null ? rahavardId : "ندارد",
+                brsId != null ? brsId : "ندارد"
             ]
         );
         console.log(`Inserted/Updated symbol: ${symbol} on server:${serverNumber} that is ${status == 0 ? 'inactive' : "active"}`);
@@ -86,5 +103,5 @@ async function insertOrUpdateSymbolToDatabase(symbol, symbolData, serverNumber, 
 
 module.exports = getData;
 
-// ()
+// // ()
 
